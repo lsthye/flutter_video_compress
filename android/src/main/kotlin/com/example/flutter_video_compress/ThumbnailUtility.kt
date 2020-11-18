@@ -28,8 +28,14 @@ class ThumbnailUtility(channelName: String) {
 
         if (dir != null && !dir.exists()) dir.mkdirs()
 
-        val file = File(dir, path.substring(path.lastIndexOf('/'),
-                path.lastIndexOf('.')) + ".jpg")
+        val filename = if (path.lastIndexOf(".") == -1) {
+            path.substring(path.lastIndexOf('/'))
+        } else {
+            path.substring(path.lastIndexOf('/'), path.lastIndexOf('.'))
+        }
+
+        val file = File(dir, "$filename.jpg")
+        
         utility.deleteFile(file)
 
         val stream = ByteArrayOutputStream()
