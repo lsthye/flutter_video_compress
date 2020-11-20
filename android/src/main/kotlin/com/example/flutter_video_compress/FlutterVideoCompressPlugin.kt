@@ -41,8 +41,13 @@ class FlutterVideoCompressPlugin : MethodCallHandler {
                         position, result)
             }
             "getMediaInfo" -> {
-                val path = call.argument<String>("path")!!
-                result.success(utility.getMediaInfoJson(reg.context(), path).toString())
+                try {
+                    val path = call.argument<String>("path")!!
+                    result.success(utility.getMediaInfoJson(reg.context(), path).toString())
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                    result.success(null)
+                }
             }
             "compressVideo" -> {
                 val path = call.argument<String>("path")!!

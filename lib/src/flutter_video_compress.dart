@@ -204,6 +204,7 @@ class FlutterVideoCompress {
       'includeAudio': includeAudio,
       'frameRate': frameRate,
     });
+    if (jsonStr == null) return null;
     _isCompressing = false;
     final jsonMap = json.decode(jsonStr);
     return MediaInfo.fromJson(jsonMap);

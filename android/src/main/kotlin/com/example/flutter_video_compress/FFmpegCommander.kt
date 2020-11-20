@@ -71,18 +71,28 @@ class FFmpegCommander(private val context: Context, private val channelName: Str
                         if (stopCommand) {
                             print("FlutterVideoCompress: Video compression has stopped")
                             stopCommand = false
-                            val json = utility.getMediaInfoJson(context, path)
-                            json.put("isCancel", true)
-                            result.success(json.toString())
+                            try {
+                                val json = utility.getMediaInfoJson(context, path)
+                                json.put("isCancel", true)
+                                result.success(json.toString())
+                            } catch (e: java.lang.Exception) {
+                                e.printStackTrace()
+                                result.success(null)
+                            }
                             totalTime = 0
                             ffTask?.killRunningProcess()
                         }
                     }
 
                     override fun onFinish() {
-                        val json = utility.getMediaInfoJson(context, file.absolutePath)
-                        json.put("isCancel", false)
-                        result.success(json.toString())
+                        try {
+                            val json = utility.getMediaInfoJson(context, file.absolutePath)
+                            json.put("isCancel", false)
+                            result.success(json.toString())
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                            result.success(null)
+                        }
                         if (deleteOrigin) {
                             File(path).delete()
                         }
