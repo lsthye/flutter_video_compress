@@ -6,6 +6,7 @@ import io.flutter.plugin.common.MethodChannel
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
+import java.util.*
 
 class ThumbnailUtility(channelName: String) {
     private val utility = Utility(channelName)
@@ -28,11 +29,7 @@ class ThumbnailUtility(channelName: String) {
 
         if (dir != null && !dir.exists()) dir.mkdirs()
 
-        val filename = if (path.lastIndexOf(".") == -1) {
-            path.substring(path.lastIndexOf('/'))
-        } else {
-            path.substring(path.lastIndexOf('/'), path.lastIndexOf('.'))
-        }
+        val filename = UUID.randomUUID().toString()
 
         val file = File(dir, "$filename.jpg")
         
